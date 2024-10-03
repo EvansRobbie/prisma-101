@@ -1,9 +1,11 @@
 import { getPosts } from "@/_actions/posts";
+import { getUsers } from "@/_actions/users";
 import Image from "next/image";
 
 export default async function Home() {
-  const posts = await getPosts()
+  const [posts, users] = await Promise.all([getPosts(), getUsers()])
   console.log(posts)
+  // console.log(users)  
 
 
   return (
