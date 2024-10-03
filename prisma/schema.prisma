@@ -17,11 +17,16 @@ model User {
   id Int  @default(autoincrement())
   email String @unique
   name String @map("firstName")
-  role String
+  role Role? @default(USER) //can have null values
 
   @@map("Users")
   @@id([email, name])
 
   @@unique([name, role])
   @@index([id, email])
+}
+
+enum Role {
+  USER
+  ADMIN
 }
