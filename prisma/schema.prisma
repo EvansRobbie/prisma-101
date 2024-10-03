@@ -14,8 +14,14 @@ datasource db {
 }
 
 model User {
-  id Int @id
+  id Int  @default(autoincrement())
   email String @unique
-  name String
+  name String @map("firstName")
   role String
+
+  @@map("Users")
+  @@id([email, name])
+
+  @@unique([name, role])
+  @@index([id, email])
 }
