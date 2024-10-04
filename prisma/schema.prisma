@@ -40,7 +40,7 @@ model Post {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   published  Boolean    @default(false)
-  likeNum    Int?
+  likeNum    Int?        @default(0)
   authorId   Int
   author     User       @relation(fields: [authorId], references: [id])
   categories Category[] // many to many relationships

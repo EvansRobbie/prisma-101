@@ -41,12 +41,91 @@ export const getPosts = async () => {
         
 
       },
-      include:{
-        author:true
-      }
+      // select specific fields
+      select:{
+        title:true,
+        author:{
+          select:{
+            name:true
+          }
+        }
+      },
+     
+      // include:{
+      //   author:true
+      // }
     })
     return res;
   } catch (error) {
     throw error;
   }
 };
+
+
+// aggregate
+export const aggregatePosts = async () => {
+  try {
+    const res = await prisma.post.aggregate({
+      _sum:{
+        likeNum:true
+      },
+      _avg:{
+        likeNum:true
+      },
+      _count:{
+        id:true
+      },
+      _max:{
+        likeNum:true
+      },
+      _min:{
+        likeNum:true
+      }
+    })
+      return res;
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+// Group
+
+export const groupPosts = async () => {
+  try {
+    const res = await prisma.post.groupBy({
+      by:["authorId"],
+      _count:true,
+      _sum:{
+        likeNum:true
+      },
+      _avg:{
+        likeNum:true
+      },
+      _max:{
+        likeNum:true
+      },
+      _min:{
+        likeNum:true
+      },
+     
+    })
+      return res;
+  } catch (error) {
+      console.log(error)
+  }
+}
+
+// sorting
+
+export const sortPosts = async () => {
+  try {
+    const res = await prisma.post.findMany({
+      orderBy:{
+        likeNum:"asc"
+      }
+    })
+      return res;
+  } catch (error) {
+      console.log(error)
+  }
+}

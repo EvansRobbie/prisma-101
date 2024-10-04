@@ -1,11 +1,11 @@
-import { getPosts } from "@/_actions/posts";
+import { aggregatePosts, getPosts, groupPosts, sortPosts } from "@/_actions/posts";
 import { getUsers } from "@/_actions/users";
 import Image from "next/image";
 
 export default async function Home() {
-  const [posts, users] = await Promise.all([getPosts(), getUsers()])
-  console.log(posts)
-  // console.log(users)  
+  const [posts, users, totalLikes, group, sort] = await Promise.all([getPosts(), getUsers(), aggregatePosts(), groupPosts(), sortPosts()])
+  // console.log(posts)
+  console.log(sort)  
 
 
   return (
