@@ -36,24 +36,82 @@ export const getUsers = async () => {
     //   }
     // });
 
-
     // relational filters
 
     const users = await prisma.user.findMany({
-      where:{
-        posts:{
+      where: {
+        posts: {
           //all => every
           //any => some
-          none:{
-            published:false
-          }
-        }
+          none: {
+            published: false,
+          },
+        },
       },
-    
     });
 
-    return users ;
+    return users;
   } catch (error) {
     throw error;
+  }
+};
+
+// insert user
+export const insertUser = async () => {
+  try {
+    const user = await prisma.user.create({
+      data: {
+        name: 'Robbie2',
+        email: 'robbie2@prismadb.com',
+        role: 'ADMIN',
+        posts: {
+          // create post and user at the same time
+          create: [
+            {
+              title: 'Hello Prisma',
+              categories: {
+                connect: [
+                  {
+                    id: 1,
+                  },
+                  {
+                    id: 2,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    });
+    console.log(user);
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const createManyUser = async () => {
+  try {
+    const user = await prisma.user.createMany({
+      data: [
+        {
+          name: 'RobbieMany1',
+          email: 'robbiemany@prismadb.com',
+          role: 'ADMIN',
+        },
+        {
+          name: 'Robbie3',
+          email: 'robbie3@prismadb.com',
+          role: 'ADMIN',
+        },
+        
+      ],
+      skipDuplicates: true, // skip duplicate if unique data is set to true
+    });
+    console.log(user);
+    return user;
+  } catch (error) {
+    console.log(error);
   }
 };

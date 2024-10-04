@@ -169,3 +169,31 @@ export const paginatePosts = async () => {
     console.log(error);
   }
 };
+
+
+// insert post
+export const insertPost = async () => {
+  try {
+    const res = await prisma.post.create({
+      data: {
+        authorId: 2,
+        title: 'Hello Prisma ORM',
+        likeNum: 4,
+        published: true,
+        categories: {
+          connect: [
+            {
+              id: 1,
+            },
+            {
+              id: 2,
+            },
+          ],
+        },
+      },
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
