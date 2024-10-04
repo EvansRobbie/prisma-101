@@ -2,6 +2,19 @@ import { PrismaClient, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+async function seedCategories() {
+  const categories = [
+    { name: "Data Base" },
+    { name: "Big Data" },
+    { name: "Ask a question about Prisma" },
+    { name: "Prisma on YouTube" }
+  ];
+
+  for (const category of categories) {
+    await prisma.category.create({ data: category });
+  }
+}
+
 const userData: Prisma.UserCreateInput[] = [
   {
     name: "John",
@@ -47,6 +60,28 @@ const userData: Prisma.UserCreateInput[] = [
           categories: {
             connect: [
               {
+                id: 3,
+              },
+            ],
+          },
+          published: true,
+        },
+        {
+          title: "Follow Prisma on Twitter",
+          categories: {
+            connect: [
+              {
+                id: 2,
+              },
+            ],
+          },
+          published: true,
+        },
+        {
+          title: "Follow Prisma on Twitter",
+          categories: {
+            connect: [
+              {
                 id: 1,
               },
             ],
@@ -57,10 +92,142 @@ const userData: Prisma.UserCreateInput[] = [
     },
   },
   {
-    name: "sara",
+    name: "Sara",
     email: "sara@prisma.io",
     posts: {
       create: [
+        {
+          title: "Ask a question about Prisma on GitHub",
+
+          published: true,
+          categories: {
+            connect: [
+              {
+                id: 4,
+              },
+            ],
+          },
+        },
+        {
+          title: "Ask a question about Prisma on GitHub",
+
+          published: true,
+          categories: {
+            connect: [
+              {
+                id: 3,
+              },
+            ],
+          },
+        },
+        {
+          title: "Ask a question about Prisma on GitHub",
+
+          published: true,
+          categories: {
+            connect: [
+              {
+                id: 2,
+              },
+            ],
+          },
+        },
+        {
+          title: "Prisma on YouTube",
+          categories: {
+            connect: [
+              {
+                id: 1,
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
+    name: "Smith",
+    email: "smith@prisma.io",
+    posts: {
+      create: [
+        {
+          title: "Ask a question about Prisma on GitHub",
+
+          published: true,
+          categories: {
+            connect: [
+              {
+                id: 4,
+              },
+            ],
+          },
+        },
+        {
+          title: "Ask a question about Prisma on GitHub",
+
+          published: true,
+          categories: {
+            connect: [
+              {
+                id: 3,
+              },
+            ],
+          },
+        },
+        {
+          title: "Ask a question about Prisma on GitHub",
+
+          published: true,
+          categories: {
+            connect: [
+              {
+                id: 2,
+              },
+            ],
+          },
+        },
+        {
+          title: "Prisma on YouTube",
+          categories: {
+            connect: [
+              {
+                id: 1,
+              },
+            ],
+          },
+        },
+      ],
+    },
+  },
+  {
+    name: "Mary",
+    email: "mary@prisma.io",
+    posts: {
+      create: [
+        {
+          title: "Ask a question about Prisma on GitHub",
+
+          published: true,
+          categories: {
+            connect: [
+              {
+                id: 4,
+              },
+            ],
+          },
+        },
+        {
+          title: "Ask a question about Prisma on GitHub",
+
+          published: true,
+          categories: {
+            connect: [
+              {
+                id: 3,
+              },
+            ],
+          },
+        },
         {
           title: "Ask a question about Prisma on GitHub",
 
@@ -89,7 +256,11 @@ const userData: Prisma.UserCreateInput[] = [
 ];
 
 async function main() {
-  console.log(`Start seeding ...`);
+  console.log(`Start seeding categories...`);
+  await seedCategories();
+  console.log(`Categories seeded.`);
+
+  console.log(`Start seeding users...`);
   for (const u of userData) {
     const user = await prisma.user.create({
       data: u,
@@ -98,6 +269,7 @@ async function main() {
   }
   console.log(`Seeding finished.`);
 }
+
 
 main()
   .then(async () => {
